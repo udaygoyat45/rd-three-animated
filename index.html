@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+        <title>Reaction–Diffusion (Gray–Scott) — three.js</title>
+        <style>
+        html, body { margin:0; height:100%; background:#FFF; }
+        canvas { display:block; }
+        .hud {
+            position: fixed; top: 10px; left: 10px; color: #eee; font: 12px/1.4 system-ui;
+            background: rgba(0,0,0,.4); padding: .5rem .6rem; border-radius: .4rem;
+        }
+        .hud b { color:#fff }
+        </style>
+    </head>
+    <body>
+        <div class="hud">
+            <b>Gray–Scott</b> — drag to seed
+        </div>
+
+        <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "simplex-noise": "https://unpkg.com/simplex-noise@4.0.1/dist/esm/simplex-noise.js"
+            }
+        }
+        </script>
+        <script type="module" src="./main.js"></script>
+        <script type="module" src="./simulation.js"></script>
+    </body>
+</html>
