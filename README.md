@@ -2,12 +2,15 @@
 
 A real-time WebGL implementation of the Gray-Scott reaction-diffusion system with Perlin noise-driven parameter animation. Watch organic patterns continuously evolve through parameter space, creating an ever-changing display of emergent complexity.
 
+<video src="demo.webm" controls muted autoplay loop width="100%"></video>
+
 ## Features
 
 - **Real-time GPU simulation** using Three.js and WebGL fragment shaders
 - **Perlin noise animation** smoothly varies parameters over time for organic evolution
 - **Coupled parameter system** keeps feed/kill rates balanced on the "interesting diagonal band"
 - **Interactive seeding** via click-and-drag to inject new patterns
+- **Canvas recording** with keyboard shortcut (press R) to capture high-quality video
 - **High-performance ping-pong rendering** with float/half-float textures
 
 ## How It Works
@@ -51,6 +54,7 @@ This creates continuous organic transitions between pattern types (Worms → Dot
 - Ping-pong render targets (1080×1080) for GPU state
 - Scene management and animation loop
 - Interactive brush system
+- Canvas recording with MediaRecorder API
 
 **`simulation.js`** - Parameter animation system
 - `Parameter` class: Wraps Perlin noise generators for smooth value variation
@@ -90,6 +94,7 @@ npx http-server
 ### Interaction
 
 - **Click and drag** to inject B chemical and seed new patterns
+- **Press R** to start/stop recording (saves as WebM video)
 - **Watch** as parameters smoothly evolve through pattern space
 - **Check console** for current parameter values (logged every ~16 seconds)
 
