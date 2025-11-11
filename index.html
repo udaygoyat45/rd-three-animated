@@ -15,11 +15,24 @@
             background: rgba(0,0,0,.4); padding: .5rem .6rem; border-radius: .4rem;
         }
         .hud b { color:#fff }
+        .recording-indicator {
+            display: none;
+            color: #ff4444;
+            font-weight: bold;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        .recording-indicator.active { display: inline; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
         </style>
     </head>
     <body>
         <div class="hud">
-            <b>Gray–Scott</b> — drag to seed
+            <b>Gray–Scott</b> — drag to seed<br>
+            Press <b>R</b> to start/stop recording
+            <span class="recording-indicator" id="rec-indicator"> ● REC</span>
         </div>
 
         <script type="importmap">

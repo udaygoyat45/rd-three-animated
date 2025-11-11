@@ -160,6 +160,93 @@ function onResize() {
 }
 window.addEventListener('resize', onResize);
 
+// ---------- Recording ----------
+let mediaRecorder = null;
+let recordedChunks = [];
+let isRecording = false;
+
+function startRecording() {
+    const canvas = renderer.domElement;
+    const stream = canvas.captureStream(60); // 60 fps
+
+    const options = {
+        mimeType: 'video/webm;codecs=vp9',
+        videoBitsPerSecond: 8000000 // 8 Mbps for high quality
+    };
+
+    // Fallback to vp8 if vp9 not supported
+    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        options.mimeType = 'video/webm;codecs=vp8';
+    }
+
+    recordedChunks = [];
+    mediaRecorder = new MediaRecorder(stream, options);
+
+    mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+            recordedChunks.push(event.data);
+        }
+    };
+
+    mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+
+        // Download the video
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `gray-scott-${Date.now()}.webm`;
+        document.body.appendChild(a);
+        a.click();
+
+        // Cleanup
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 100);
+
+        console.log('Recording saved!');
+    };
+
+    mediaRecorder.start();
+    isRecording = true;
+
+    // Show recording indicator
+    const indicator = document.getElementById('rec-indicator');
+    if (indicator) indicator.classList.add('active');
+
+    console.log('Recording started (press R to stop)');
+}
+
+function stopRecording() {
+    if (mediaRecorder && isRecording) {
+        mediaRecorder.stop();
+        isRecording = false;
+
+        // Hide recording indicator
+        const indicator = document.getElementById('rec-indicator');
+        if (indicator) indicator.classList.remove('active');
+
+        console.log('Recording stopped, saving...');
+    }
+}
+
+function toggleRecording() {
+    if (isRecording) {
+        stopRecording();
+    } else {
+        startRecording();
+    }
+}
+
+// Keyboard shortcut: R to record
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'r' || e.key === 'R') {
+        toggleRecording();
+    }
+});
+
 // ---------- Simulation loop ----------
 function simStep(readRT, writeRT) {
     stepMat.uniforms.uState.value = readRT.texture;
