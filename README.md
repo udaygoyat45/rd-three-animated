@@ -2,7 +2,7 @@
 
 A real-time WebGL implementation of the Gray-Scott reaction-diffusion system with Perlin noise-driven parameter animation. Watch organic patterns continuously evolve through parameter space, creating an ever-changing display of emergent complexity.
 
-<video src="demo.webm" controls muted autoplay loop width="100%"></video>
+[reaction-diffusion demo](./demo.webm)
 
 ## Features
 
